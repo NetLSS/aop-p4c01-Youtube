@@ -34,15 +34,13 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
                 /**
                  * 메인 엑티비티 모션 레이아웃에 값을 전달
                  */
-                binding?.let {
-                    /**
-                     * Fragment 는 자기 단독으로 존재할 수 없기 떄문에 activity 가 존재 할수밖에 없고
-                     * activity 를 가져오면 해당 Fragment 가 attach 되어있는 액티비티를 가져온다.
-                     */
-                    (activity as MainActivity).also { mainActivity ->
-                        mainActivity.findViewById<MotionLayout>(mainBinding.mainMotionLayout.id).progress =
-                            abs(progress)
-                    }
+                /**
+                 * Fragment 는 자기 단독으로 존재할 수 없기 떄문에 activity 가 존재 할수밖에 없고
+                 * activity 를 가져오면 해당 Fragment 가 attach 되어있는 액티비티를 가져온다.
+                 */
+                (activity as MainActivity).also { mainActivity ->
+                    mainActivity.findViewById<MotionLayout>(mainBinding.mainMotionLayout.id).progress =
+                        abs(progress)
                 }
             }
 
