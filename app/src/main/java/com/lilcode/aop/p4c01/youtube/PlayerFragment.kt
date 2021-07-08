@@ -17,9 +17,6 @@ import com.lilcode.aop.p4c01.youtube.databinding.ActivityMainBinding
 import com.lilcode.aop.p4c01.youtube.databinding.FragmentPlayerBinding
 import com.lilcode.aop.p4c01.youtube.dto.VideoDto
 import com.lilcode.aop.p4c01.youtube.service.VideoService
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -44,9 +41,12 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
         initMotionLayout()
         initRecyclerView()
         initPlayer()
+        initControlButton()
 
         getVideoList()
     }
+
+
 
 
     private fun initMotionLayout() {
@@ -121,11 +121,23 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
 
                 }else{
                     bottomPlayerControlButton.setImageResource(R.drawable.ic_baseline_play_arrow_24)
-
                 }
             }
         })
 
+    }
+
+    private fun initControlButton()=with(binding!!) {
+        bottomPlayerControlButton.setOnClickListener {
+            // player 의 재생 여부 확인해서 처리
+            val player = player?:return@setOnClickListener
+
+            if(player.isPlaying){
+                player.pause()
+            }else{
+                player.play()
+            }
+        }
     }
 
     private fun getVideoList() {
