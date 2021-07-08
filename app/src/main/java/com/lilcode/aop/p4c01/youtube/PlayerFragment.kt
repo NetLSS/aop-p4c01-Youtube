@@ -74,7 +74,11 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
 
     private fun initRecyclerView() {
 
-        videoAdapter = VideoAdapter()
+        videoAdapter = VideoAdapter(callback = { url, title ->
+
+            play(url, title)
+
+        })
 
         binding!!.fragmentRecyclerView.apply {
             adapter = videoAdapter
@@ -108,6 +112,14 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
                     }
 
                 })
+        }
+    }
+
+    // 동영상 아이템 눌렀을 때 처리
+    fun play(url: String, title: String) {
+        binding?.let{
+            it.playerMotionLayout.transitionToEnd() // 열기
+            it.bottomTitleTextView.text = title
         }
     }
 

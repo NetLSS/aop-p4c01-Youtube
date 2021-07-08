@@ -32,7 +32,14 @@ class MainActivity : AppCompatActivity() {
             .replace(binding.fragmentContainer.id, PlayerFragment())
             .commit()
 
-        videoAdapter = VideoAdapter()
+        videoAdapter = VideoAdapter(callback = {url, title->
+            // 모션 레이아웃 엔드(펼침) 상태로 바꾸고..
+
+            //supportFragmentManager 로 모든 프레그 먼트중 PlayerFragment 를 찾아서 가져옴
+            supportFragmentManager.fragments.find{ it is PlayerFragment}?.let{
+                (it as PlayerFragment).play(url, title)
+            }
+        })
 
         binding.mainRecyclerView.apply {
             adapter = videoAdapter

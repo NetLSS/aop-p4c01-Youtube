@@ -13,7 +13,7 @@ import com.lilcode.aop.p4c01.youtube.model.VideoModel
 
 
 // 리사이클러 뷰 2개를 같은 어뎁터를 사용할 예정
-class VideoAdapter : ListAdapter<VideoModel, VideoAdapter.ViewHolder>(diffUtil) {
+class VideoAdapter(val callback: (String, String)->Unit) : ListAdapter<VideoModel, VideoAdapter.ViewHolder>(diffUtil) {
 
     inner class ViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
         fun bind(item: VideoModel) {
@@ -24,6 +24,10 @@ class VideoAdapter : ListAdapter<VideoModel, VideoAdapter.ViewHolder>(diffUtil) 
                 Glide.with(thumbnailImageView.context)
                     .load(item.thumb)
                     .into(thumbnailImageView)
+
+                view.setOnClickListener {
+                    callback(item.sources, item.title)
+                }
             }
         }
     }
