@@ -1,14 +1,25 @@
 package com.lilcode.aop.p4c01.youtube
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.lilcode.aop.p4c01.youtube.adapter.VideoAdapter
 import com.lilcode.aop.p4c01.youtube.databinding.ActivityMainBinding
 import com.lilcode.aop.p4c01.youtube.databinding.FragmentPlayerBinding
+import com.lilcode.aop.p4c01.youtube.dto.VideoDto
+import com.lilcode.aop.p4c01.youtube.service.VideoService
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import kotlin.math.abs
 
 class PlayerFragment : Fragment(R.layout.fragment_player) {
+    private lateinit var videoAdapter: VideoAdapter
 
     private var binding: FragmentPlayerBinding? = null
     private lateinit var mainBinding: ActivityMainBinding
@@ -20,7 +31,15 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
         mainBinding = ActivityMainBinding.inflate(layoutInflater)
         binding = fragmentPlayerBinding
 
-        fragmentPlayerBinding.playerMotionLayout.setTransitionListener(object :
+        initMotionLayout()
+        initRecyclerView()
+
+        getVideoList()
+    }
+
+
+    private fun initMotionLayout() {
+        binding!!.playerMotionLayout.setTransitionListener(object :
             MotionLayout.TransitionListener {
             override fun onTransitionStarted(p0: MotionLayout?, p1: Int, p2: Int) {
             }
@@ -51,7 +70,45 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
             }
 
         })
+    }
 
+    private fun initRecyclerView() {
+
+        videoAdapter = VideoAdapter()
+
+        binding!!.fragmentRecyclerView.apply {
+            adapter = videoAdapter
+            layoutManager = LinearLayoutManager(context)
+        }
+    }
+
+    private fun getVideoList() {
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://run.mocky.io/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        retrofit.create(VideoService::class.java).also {
+            it.listVideos()
+                .enqueue(object : Callback<VideoDto> {
+                    override fun onResponse(call: Call<VideoDto>, response: Response<VideoDto>) {
+                        if (response.isSuccessful.not()) {
+                            Log.e("MainActivity", "response fail")
+                            return
+                        }
+
+                        response.body()?.let { videoDto ->
+                            videoAdapter.submitList(videoDto.videos)
+                        }
+
+                    }
+
+                    override fun onFailure(call: Call<VideoDto>, t: Throwable) {
+                        // 예외처리
+                    }
+
+                })
+        }
     }
 
     override fun onDestroy() {
