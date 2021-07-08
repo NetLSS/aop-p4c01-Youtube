@@ -2,7 +2,15 @@ package com.lilcode.aop.p4c01.youtube
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import com.lilcode.aop.p4c01.youtube.databinding.ActivityMainBinding
+import com.lilcode.aop.p4c01.youtube.dto.VideoDto
+import com.lilcode.aop.p4c01.youtube.service.VideoService
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity() {
     /**
@@ -19,5 +27,36 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction()
             .replace(binding.fragmentContainer.id, PlayerFragment())
             .commit()
+
+        getVideoList()
+
+    }
+
+    private fun getVideoList(){
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://run.mocky.io/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        retrofit.create(VideoService::class.java).also{
+            it.listVideos()
+                .enqueue(object: Callback<VideoDto>{
+                    override fun onResponse(call: Call<VideoDto>, response: Response<VideoDto>) {
+                        if(response.isSuccessful.not()){
+                            Log.e("MainActivity","response fail")
+                            return
+                        }
+
+                        response.body()?.let{
+                            Log.d("MainActiviy", it.toString())
+                        }
+                    }
+
+                    override fun onFailure(call: Call<VideoDto>, t: Throwable) {
+                        // 예외처리
+                    }
+
+                })
+        }
     }
 }
