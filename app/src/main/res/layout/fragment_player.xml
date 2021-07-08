@@ -2,7 +2,8 @@
 모션레이아웃 =  컨스트레인트 레이아웃에 애니메이션을 줄 수 있는. 열려있을 때 내려가 있을 때 속성 줄 수 있
 기본은 constraint 로 열려있는 상태 기준 으로 구현
 -->
-<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.lilcode.aop.p4c01.youtube.CustomMotionLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/playerMotionLayout"
     android:layout_width="match_parent"
@@ -64,4 +65,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/mainContainerLayout" />
-</androidx.constraintlayout.motion.widget.MotionLayout>
+</com.lilcode.aop.p4c01.youtube.CustomMotionLayout>
