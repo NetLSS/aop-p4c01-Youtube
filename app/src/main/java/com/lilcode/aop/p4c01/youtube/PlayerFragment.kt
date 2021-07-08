@@ -150,9 +150,16 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
         }
     }
 
+    override fun onStop() {
+        super.onStop()
+
+        player?.pause()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
 
         binding = null
+        player?.release()
     }
 }
