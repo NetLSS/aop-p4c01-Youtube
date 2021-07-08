@@ -1,11 +1,16 @@
 package com.lilcode.aop.p4c01.youtube
 
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.SimpleExoPlayer
+import com.google.android.exoplayer2.source.ProgressiveMediaSource
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.lilcode.aop.p4c01.youtube.adapter.VideoAdapter
 import com.lilcode.aop.p4c01.youtube.databinding.ActivityMainBinding
 import com.lilcode.aop.p4c01.youtube.databinding.FragmentPlayerBinding
@@ -23,6 +28,7 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
 
     private var binding: FragmentPlayerBinding? = null
     private lateinit var mainBinding: ActivityMainBinding
+    private var player: SimpleExoPlayer? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -33,9 +39,12 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
 
         initMotionLayout()
         initRecyclerView()
+        initPlayer()
 
         getVideoList()
     }
+
+
 
 
     private fun initMotionLayout() {
@@ -86,6 +95,14 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
         }
     }
 
+    private fun initPlayer() {
+        context?.let{
+            player = SimpleExoPlayer.Builder(it).build()
+        }
+
+        binding!!.playerView.player = player
+    }
+
     private fun getVideoList() {
         val retrofit = Retrofit.Builder()
             .baseUrl("https://run.mocky.io/")
@@ -117,6 +134,16 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
 
     // 동영상 아이템 눌렀을 때 처리
     fun play(url: String, title: String) {
+
+        context?.let{
+            val dataSourceFactory = DefaultDataSourceFactory(it)
+            val mediaSource = ProgressiveMediaSource.Factory(dataSourceFactory)
+                .createMediaSource(MediaItem.fromUri(Uri.parse(url)))
+            player?.setMediaSource(mediaSource)
+            player?.prepare()
+            player?.play()
+        }
+
         binding?.let{
             it.playerMotionLayout.transitionToEnd() // 열기
             it.bottomTitleTextView.text = title
