@@ -2,9 +2,9 @@
 모션레이아웃 =  컨스트레인트 레이아웃에 애니메이션을 줄 수 있는. 열려있을 때 내려가 있을 때 속성 줄 수 있
 기본은 constraint 로 열려있는 상태 기준 으로 구현
 -->
-<com.lilcode.aop.p4c01.youtube.CustomMotionLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.lilcode.aop.p4c01.youtube.CustomMotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/playerMotionLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -20,14 +20,7 @@
 
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/bottomPlayerControlButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        app:layout_constraintBottom_toBottomOf="@id/mainContainerLayout"
-        app:layout_constraintEnd_toEndOf="@id/mainContainerLayout"
-        app:layout_constraintTop_toTopOf="@id/mainContainerLayout" />
+
 
     <!--    동영상 플레이어-->
     <com.google.android.exoplayer2.ui.PlayerView
@@ -38,6 +31,17 @@
         app:layout_constraintBottom_toBottomOf="@id/mainContainerLayout"
         app:layout_constraintStart_toStartOf="@id/mainContainerLayout"
         app:layout_constraintTop_toTopOf="@id/mainContainerLayout" />
+
+    <ImageView
+        android:id="@+id/bottomPlayerControlButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintBottom_toBottomOf="@id/mainContainerLayout"
+        app:layout_constraintEnd_toEndOf="@id/mainContainerLayout"
+        app:layout_constraintTop_toTopOf="@id/mainContainerLayout"
+        android:src="@drawable/ic_baseline_play_arrow_24"
+        tools:src="@drawable/ic_baseline_play_arrow_24"/>
 
     <!--
     ellipsize="end" 길이 넘어가면 ...으로

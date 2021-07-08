@@ -8,6 +8,7 @@ import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
@@ -16,6 +17,9 @@ import com.lilcode.aop.p4c01.youtube.databinding.ActivityMainBinding
 import com.lilcode.aop.p4c01.youtube.databinding.FragmentPlayerBinding
 import com.lilcode.aop.p4c01.youtube.dto.VideoDto
 import com.lilcode.aop.p4c01.youtube.service.VideoService
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -43,8 +47,6 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
 
         getVideoList()
     }
-
-
 
 
     private fun initMotionLayout() {
@@ -95,12 +97,35 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
         }
     }
 
-    private fun initPlayer() {
-        context?.let{
+    private fun initPlayer() =with(binding!!){
+        context?.let {
             player = SimpleExoPlayer.Builder(it).build()
         }
 
-        binding!!.playerView.player = player
+        playerView.player = player
+        val oo = object : Player.Listener {
+            override fun onIsPlayingChanged(isPlaying: Boolean) {
+                super.onIsPlayingChanged(isPlaying)
+            }
+        }
+
+        player?.addListener(object: Player.EventListener{
+
+            // play 여부가 바뀔 때 마다 실행
+
+            override fun onIsPlayingChanged(isPlaying: Boolean) {
+                super.onIsPlayingChanged(isPlaying)
+
+                if(isPlaying){
+                    bottomPlayerControlButton.setImageResource(R.drawable.ic_baseline_pause_24)
+
+                }else{
+                    bottomPlayerControlButton.setImageResource(R.drawable.ic_baseline_play_arrow_24)
+
+                }
+            }
+        })
+
     }
 
     private fun getVideoList() {
@@ -135,7 +160,7 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
     // 동영상 아이템 눌렀을 때 처리
     fun play(url: String, title: String) {
 
-        context?.let{
+        context?.let {
             val dataSourceFactory = DefaultDataSourceFactory(it)
             val mediaSource = ProgressiveMediaSource.Factory(dataSourceFactory)
                 .createMediaSource(MediaItem.fromUri(Uri.parse(url)))
@@ -144,7 +169,7 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
             player?.play()
         }
 
-        binding?.let{
+        binding?.let {
             it.playerMotionLayout.transitionToEnd() // 열기
             it.bottomTitleTextView.text = title
         }
