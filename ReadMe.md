@@ -1,5 +1,7 @@
 # Aop-part4-chapter01 - Youtube
 
+보다 자세한 내용을 저의 [블로그 글](https://whyprogrammer.tistory.com/603)에서도 보실 수 있습니다.
+
 # 목차
 
 1. 인트로 (완성앱 & 구현 기능 소개)
