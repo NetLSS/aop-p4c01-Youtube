@@ -28,10 +28,13 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        supportFragmentManager.beginTransaction()
-            .replace(binding.fragmentContainer.id, PlayerFragment())
-            .commit()
+        initFragmentContainer()
+        initRecyclerView()
 
+        getVideoList()
+    }
+
+    private fun initRecyclerView() {
         videoAdapter = VideoAdapter(callback = {url, title->
             // 모션 레이아웃 엔드(펼침) 상태로 바꾸고..
 
@@ -45,9 +48,12 @@ class MainActivity : AppCompatActivity() {
             adapter = videoAdapter
             layoutManager = LinearLayoutManager(context)
         }
+    }
 
-        getVideoList()
-
+    private fun initFragmentContainer() {
+        supportFragmentManager.beginTransaction()
+            .replace(binding.fragmentContainer.id, PlayerFragment())
+            .commit()
     }
 
     private fun getVideoList(){

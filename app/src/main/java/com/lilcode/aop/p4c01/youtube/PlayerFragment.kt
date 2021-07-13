@@ -55,7 +55,7 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
             override fun onTransitionStarted(p0: MotionLayout?, p1: Int, p2: Int) {
             }
 
-            override fun onTransitionChange(
+            override fun onTransitionChange( // 재정의를 통해 메인 엑티비티(모션 레이아웃)과 연동한다.
                 motionLayout: MotionLayout?,
                 startId: Int,
                 endId: Int,
@@ -111,7 +111,7 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
 
         player?.addListener(object: Player.EventListener{
 
-            // play 여부가 바뀔 때 마다 실행
+            // play 여부가 바뀔 때 마다 실행 (아이콘을 알맞게 변경)
 
             override fun onIsPlayingChanged(isPlaying: Boolean) {
                 super.onIsPlayingChanged(isPlaying)

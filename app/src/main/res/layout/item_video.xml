@@ -34,16 +34,15 @@
         android:id="@+id/subTitleTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/titleTextView"
-        app:layout_constraintStart_toStartOf="@id/titleTextView"
-        app:layout_constraintEnd_toEndOf="@id/titleTextView"
         android:layout_marginTop="4dp"
-        android:textSize="13sp"
+        android:ellipsize="end"
         android:maxLines="1"
         android:singleLine="true"
-        android:ellipsize="end"
-        tools:text="weofjeoigjvweiojweiogjewiojgweiofjewoifjewoifjweiojfiowejfweiojfwioejfewoijfweoi"
-         />
+        android:textSize="13sp"
+        app:layout_constraintEnd_toEndOf="@id/titleTextView"
+        app:layout_constraintStart_toStartOf="@id/titleTextView"
+        app:layout_constraintTop_toBottomOf="@id/titleTextView"
+        tools:text="weofjeoigjvweiojweiogjewiojgweiofjewoifjewoifjweiojfiowejfweiojfwioejfewoijfweoi" />
 
     <ImageView
         android:id="@+id/logoImageView"
