@@ -2,19 +2,13 @@
 
 보다 자세한 내용을 저의 [블로그 글](https://whyprogrammer.tistory.com/603)에서도 보실 수 있습니다.
 
-# 목차
+# TODO
 
-1. 인트로 (완성앱 & 구현 기능 소개)
-2. MotionLayout 이용하여 화면 전환 UI 구성하기 (1)
-3. MotionLayout 이용하여 화면 전환 UI 구성하기 (2)
-4. 영상 목록 API 만들기
-5. 영상 목록 기본 구조 만들기
-6. MotionLayout 과 RecyclerView 사이에 스크롤 가능하게 하기(1)
-7. )MotionLayout 과 RecyclerView 사이에 스크롤 가능하게 하기(2)
-8. ExoPlayer를 이용하여 동영상 재생하기
-9. 마무리하기
-10. 아웃트로
-
+- MotionLayout 이용하여 화면 전환 UI 구성하기
+- 영상 목록 API 만들기
+- 영상 목록 기본 구조 만들기
+- MotionLayout 과 RecyclerView 사이에 스크롤 가능하게 하기
+- ExoPlayer를 이용하여 동영상 재생하기
 
 
 # 결과화면
@@ -28,7 +22,7 @@
 ![3](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fw8fEM%2Fbtq9qlPZbV9%2FDPtnJhBcaM5DTzhnEHm2S1%2Fimg.png)
 
 
-# 이 챕터를 통해 배우는 것
+# 사용 기술
 
 - **MotionLayout** 사용하기
 - **Exoplayer** 사용하기
